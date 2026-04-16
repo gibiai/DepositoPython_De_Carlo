@@ -53,3 +53,23 @@ for i in range(1, 10, 2):
     print(i)
 
 
+# BREAK - CONTINUE - PASS
+
+numeri = [1, 2, 3, 4, 5]
+
+for numero in numeri:
+    if numero == 3:
+        break
+    print(numero)
+
+numeri = [1, 2, 3, 4, 5]
+
+for numero in numeri:
+    if numero == 3:
+        continue
+    print(numero)
+    
+for i in range(5):
+    if i == 3:
+        pass
+    print(i)
