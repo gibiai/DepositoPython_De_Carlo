@@ -1,4 +1,4 @@
-import random
+import random # importo libreria per generare numeri random
 
 class MetodoPagamento:
     def effettua_pagamento(self, importo): # metodo base da implementare sottoclassi
