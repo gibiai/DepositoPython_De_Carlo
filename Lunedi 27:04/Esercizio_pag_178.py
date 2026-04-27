@@ -1,8 +1,8 @@
 import random # importo libreria per generare numeri random
 
-class MetodoPagamento:
+class MetodoPagamento: # classe "vuota"
     def effettua_pagamento(self, importo): # metodo base da implementare sottoclassi
-        pass # andremo a "riempirlo successivamente"
+        pass # placeholder
 
 class CartaDiCredito(MetodoPagamento): # eredita da MetodoPagamento
     def effettua_pagamento(self, importo): # override - simula pagamento con carta
