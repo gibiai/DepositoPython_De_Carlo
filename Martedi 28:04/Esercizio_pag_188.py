@@ -1,4 +1,4 @@
-from abc import ABC, abstractmethod # importo libreria ABC per classi astratte
+from abc import ABC, abstractmethod # importo ABC per classi astratte
 
 class VeicoloTrasporto(ABC): # classe astratta - non instanziabile direttamente
     def __init__(self, targa, peso_massimo):
@@ -6,16 +6,19 @@ class VeicoloTrasporto(ABC): # classe astratta - non instanziabile direttamente
         self._peso_massimo = peso_massimo # capacità massima in kg protetta
         self._carico_attuale = 0 # peso parte sempre da 0
 
-    def get_targa(self): # getter targa
+    @property # sostituisce get_targa() - legge targa senza parentesi
+    def targa(self):
         return self._targa
 
-    def get_peso_massimo(self): # getter peso massimo
+    @property # sostituisce get_peso_massimo() - legge peso massimo senza parentesi
+    def peso_massimo(self):
         return self._peso_massimo
 
-    def get_carico_attuale(self): # getter carico attuale
+    @property # sostituisce get_carico_attuale() - legge carico attuale senza parentesi
+    def carico_attuale(self):
         return self._carico_attuale
 
-    def carica(self, peso): # controlla se non supera il massimo in caso aggiunge / metodo concreto
+    def carica(self, peso): # aggiunge carico se non supera il massimo / metodo concreto
         if self._carico_attuale + peso <= self._peso_massimo:
             self._carico_attuale += peso
             print(f"Caricati {peso}kg sul veicolo {self._targa}")
@@ -31,9 +34,9 @@ class VeicoloTrasporto(ABC): # classe astratta - non instanziabile direttamente
         pass
 
 
-class Camion(VeicoloTrasporto): # classe figlia, eredita da VeicoloTrasporto
-    def __init__(self, targa, peso_massimo, numero_assi): # costruttore (aggiungo numero assi)
-        super().__init__(targa, peso_massimo) # chiamo costruttore classe madre
+class Camion(VeicoloTrasporto): # eredita da VeicoloTrasporto
+    def __init__(self, targa, peso_massimo, numero_assi):
+        super().__init__(targa, peso_massimo)
         self.__numero_assi = numero_assi # attributo specifico del camion
 
     def costo_manutenzione(self): # come da traccia: 100€ per asse + 1€ per kg di carico massimo
@@ -41,8 +44,8 @@ class Camion(VeicoloTrasporto): # classe figlia, eredita da VeicoloTrasporto
 
 
 class Furgone(VeicoloTrasporto): # eredita da VeicoloTrasporto
-    def __init__(self, targa, peso_massimo, alimentazione): # costruttore (aggiungo alimentazione)
-        super().__init__(targa, peso_massimo) # chiamo costruttore classe madre
+    def __init__(self, targa, peso_massimo, alimentazione):
+        super().__init__(targa, peso_massimo)
         self.__alimentazione = alimentazione # diesel o elettrico
 
     def costo_manutenzione(self): # come in traccia, regola: 200€ elettrico, 150€ diesel
@@ -51,7 +54,8 @@ class Furgone(VeicoloTrasporto): # eredita da VeicoloTrasporto
         else:
             return 150
 
-    def get_alimentazione(self): # getter alimentazione
+    @property # sostituisce get_alimentazione() - legge alimentazione senza parentesi
+    def alimentazione(self):
         return self.__alimentazione
 
 
@@ -64,40 +68,40 @@ class Motocarro(VeicoloTrasporto): # sempre che eredita
         return 50 * self.__anni_servizio
 
 
-class GestoreFlotta: # classe che gestisce i veicoli
+class GestoreFlotta:
     def __init__(self):
         self.__veicoli = [] # lista vuota dei veicoli
 
-    def aggiungi_veicolo(self, veicolo): # aggiunge un oggetto qualsiasi veicolo alla lista
+    def aggiungi_veicolo(self, veicolo): # aggiunge veicolo alla lista
         self.__veicoli.append(veicolo)
-        print(f"Veicolo {veicolo.get_targa()} aggiunto alla flotta!")
+        print(f"Veicolo {veicolo.targa} aggiunto alla flotta!") # uso property
 
     def rimuovi_veicolo(self, targa): # rimuove veicolo per targa
-        for veicolo in self.__veicoli: # scorre lista e rimuove per targa
-            if veicolo.get_targa() == targa:
+        for veicolo in self.__veicoli:
+            if veicolo.targa == targa: # uso property
                 self.__veicoli.remove(veicolo)
                 print(f"Veicolo {targa} rimosso dalla flotta!")
                 return
         print(f"Veicolo {targa} non trovato!")
 
-    def costo_totale_manutenzione(self): # polimorfismo - chiama costo_manutenzione() di ciascuno
+    def costo_totale_manutenzione(self): # somma costi manutenzione di tutti i veicoli
         totale = 0
-        for veicolo in self.__veicoli: # somma costi manutenzione di tutti i veicoli
+        for veicolo in self.__veicoli: # polimorfismo - chiama costo_manutenzione() di ciascuno
             totale += veicolo.costo_manutenzione()
         return totale
 
-    def carica_veicolo(self, targa, peso): # scorre lista per cercare veicolo per targa e lo carica
+    def carica_veicolo(self, targa, peso): # cerca veicolo per targa e lo carica
         for veicolo in self.__veicoli:
-            if veicolo.get_targa() == targa:
+            if veicolo.targa == targa: # uso property
                 veicolo.carica(peso)
                 return
         print(f"Veicolo {targa} non trovato!")
 
-    def stampa_veicoli(self): # scorre veicoli nella lista e stampa tutti i veicoli con info
+    def stampa_veicoli(self): # stampa tutti i veicoli con info
         print("\n-- FLOTTA --")
         for veicolo in self.__veicoli:
-            print(f"Targa: {veicolo.get_targa()} | Tipo: {type(veicolo).__name__} | Carico: {veicolo.get_carico_attuale()}/{veicolo.get_peso_massimo()}kg | Manutenzione: {veicolo.costo_manutenzione()}€") # type().__name__ restituisce il nome della classe automaticamente
-        print(f"Costo totale manutenzione: {self.costo_totale_manutenzione()}€") # stampa costo totale sommato
+            print(f"Targa: {veicolo.targa} | Tipo: {type(veicolo).__name__} | Carico: {veicolo.carico_attuale}/{veicolo.peso_massimo}kg | Manutenzione: {veicolo.costo_manutenzione()}€") # property + type().__name__ per il tipo
+        print(f"Costo totale manutenzione: {self.costo_totale_manutenzione()}€")
 
 
 # Setup gestore
@@ -115,7 +119,7 @@ while True: # ciclo si ripete finché vero
     scelta = input("Scelta: ")
 
     match scelta:
-        case "1": # aggiunge un nuovo veicolo scelto dall'utente con menu annidato
+        case "1": # aggiunge un nuovo veicolo scelto dall'utente
             print("\nTipo veicolo:")
             print("1 - Camion")
             print("2 - Furgone")
