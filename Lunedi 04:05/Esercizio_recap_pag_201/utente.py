@@ -14,11 +14,9 @@ class Utente(ABC): # classe astratta - non instanziabile direttamente
     def menu(self): # metodo astratto - comportamento diverso per ogni sottoclasse
         pass
 
-
 class StudenteUtente(Utente): # classe utente normale - eredita da Utente
     def menu(self): # implementazione metodo astratto - comportamento specifico utente
         return "Menu studente"
-
 
 class Admin(Utente): # classe admin - eredita da Utente
     def __init__(self):
