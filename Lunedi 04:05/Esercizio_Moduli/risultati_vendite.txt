@@ -1,0 +1,20 @@
+========================================
+RIEPILOGO VENDITE
+========================================
+Giorno 05/05/2026 | Vendite: [10.0, 10.0, 10.0] | Totale: 30.00€ | Media: 10.00€
+
+Totale generale: 30.00€
+Media generale: 30.00€
+
+Nessun giorno sopra la media.
+
+========================================
+RIEPILOGO VENDITE
+========================================
+Giorno 05/05/2026 | Vendite: [10.0, 10.0, 10.0] | Totale: 30.00€ | Media: 10.00€
+
+Totale generale: 30.00€
+Media generale: 30.00€
+
+Nessun giorno sopra la media.
+
