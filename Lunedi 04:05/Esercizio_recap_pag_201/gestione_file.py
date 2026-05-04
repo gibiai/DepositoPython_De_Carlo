@@ -20,7 +20,6 @@ def registra_utente(nome, password): # controlla duplicati e salva nuovo utente
         file.write(f"{nome},{password}\n") # salva nome e password separati da virgola
     return True # registrazione riuscita
 
-
 def login_utente(nome, password): # verifica credenziali su file
     try:
         with open("credenziali.txt", "r") as file: # "r" legge il file
@@ -35,13 +34,11 @@ def login_utente(nome, password): # verifica credenziali su file
     except FileNotFoundError: # se il file non esiste
         return False # nessun utente registrato
 
-
 def salva_studenti(lista_studenti): # salva lista studenti su file csv
     with open("studenti.csv", "w", newline="") as file: # "w" sovrascrive il file
         writer = csv.writer(file) # crea writer csv
         for studente in lista_studenti: # scorre tutti gli studenti
             writer.writerow([studente.nome, studente.corso]) # scrive riga csv
-
 
 def carica_studenti(): # carica studenti dal csv e li converte in oggetti
     lista_studenti = [] # lista vuota
