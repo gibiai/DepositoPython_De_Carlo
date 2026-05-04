@@ -9,14 +9,12 @@ def aggiungi_studente(lista_studenti): # crea oggetto Studente e lo aggiunge all
     lista_studenti.append(nuovo_studente) # aggiunge alla lista
     print(f"Studente {nome} aggiunto!")
 
-
 def cerca_studente(lista_studenti, nome_cerca): # cerca studente per nome con filter
     def controlla_nome(studente): # funzione che controlla se il nome corrisponde
         return studente.nome.lower() == nome_cerca.lower() # confronta ignorando maiuscole
 
     risultati = list(filter(controlla_nome, lista_studenti)) # filtra la lista
     return risultati # restituisce lista di studenti trovati
-
 
 def modifica_studente(lista_studenti): # cerca studente e lo modifica tramite setter
     print("\n--- MODIFICA STUDENTE ---")
@@ -46,7 +44,6 @@ def modifica_studente(lista_studenti): # cerca studente e lo modifica tramite se
 
     print("Studente modificato!")
 
-
 def stampa_aula(lista_studenti): # stampa tutti gli studenti ordinati per corso
     print("\n--- AULA ---")
     if len(lista_studenti) == 0: # controlla che ci siano studenti
@@ -59,7 +56,6 @@ def stampa_aula(lista_studenti): # stampa tutti gli studenti ordinati per corso
     lista_ordinata = sorted(lista_studenti, key=prendi_corso) # ordina usando prendi_corso come criterio
     for studente in lista_ordinata: # scorre studenti ordinati
         print(studente.descrivi()) # stampa descrizione di ogni studente
-
 
 def reset_aula(lista_studenti, admin): # reset completo aula - solo admin
     motivazione = input("Motivazione del reset: ") # chiede motivazione obbligatoria
