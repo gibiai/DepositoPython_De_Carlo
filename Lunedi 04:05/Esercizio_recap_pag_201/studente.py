@@ -1,4 +1,4 @@
-# studente.py - Modulo gestione singolo studente loggato
+# studente.py - Modulo gestione singolo studente 
 class Studente: # classe per rappresentare uno studente
     def __init__(self, nome, corso):
         self._nome = nome # attributo protetto
