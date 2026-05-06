@@ -3,7 +3,6 @@ from cliente import Cliente # importo classe Cliente
 from gestione_inventario import carica_inventario, salva_inventario, aggiungi_articolo, rimuovi_articolo, aggiorna_articolo, stampa_inventario # importo funzioni inventario
 from amministrazione import rapporto_vendite # importo funzione rapporto
 
-
 def menu_cliente(cliente): # menu per cliente loggato 
     while True: # ciclo ripetibile
         print(f"\n--- MENU CLIENTE ({cliente.nome} {cliente.cognome}) ---")
@@ -55,7 +54,6 @@ def menu_cliente(cliente): # menu per cliente loggato
             case _:
                 print("Scelta non valida!")
 
-
 def menu_admin(): # menu per amministratore - hardcodato
     while True: # ciclo ripetibile
         print("\n--- MENU ADMIN ---")
@@ -88,7 +86,6 @@ def menu_admin(): # menu per amministratore - hardcodato
             case _:
                 print("Scelta non valida!")
 
-
 def menu_principale(): # menu principale - accesso cliente o admin
     while True: # ciclo ripetibile
         print("\n--- BENVENUTO ---")
@@ -118,7 +115,6 @@ def menu_principale(): # menu principale - accesso cliente o admin
 
             case _:
                 print("Scelta non valida!")
-
 
 # avvio del programma
 menu_principale() # avvia il menu principale
