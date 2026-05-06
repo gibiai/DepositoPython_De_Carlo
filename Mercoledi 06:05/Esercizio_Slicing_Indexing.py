@@ -36,7 +36,7 @@ with open("slicing.txt", "w") as file: # "w" crea o sovrascrive il file
     file.write(f"Array dopo modifica: {array}\n")
 print("Dati salvati su slicing.txt!")
 
-# extra - salva su csv con tolist (metodi specifico di NumPy)
+# extra - salva su csv con tolist() (metodo specifico di NumPy)
 with open("slicing.csv", "w", newline="") as file: # "w" crea o sovrascrive il file, newline evita righe vuote
     writer = csv.writer(file) # crea writer csv
     writer.writerow(["sottoarray", "valori"]) # scrive intestazione
