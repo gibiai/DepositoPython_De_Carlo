@@ -1,0 +1,7 @@
+SLICING NUMPY
+Array originale: [12 35 44 18 42 99 99 99 99 99 21 43 26 31 36 49 23 45 10 32]
+Primi 10 elementi: [12 35 44 18 42 99 99 99 99 99]
+Ultimi 5 elementi: [49 23 45 10 32]
+Elementi da indice 5 a 15: [99 99 99 99 99 21 43 26 31 36]
+Ogni terzo elemento: [12 18 99 99 26 49 10]
+Array dopo modifica: [12 35 44 18 42 99 99 99 99 99 21 43 26 31 36 49 23 45 10 32]
