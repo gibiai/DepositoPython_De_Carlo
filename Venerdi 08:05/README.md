@@ -1,8 +1,11 @@
 🍽️ Ristorante — Gestionale Intelligente
+---
 
 👤 Progetto Individuale
 Progetto sviluppato per applicare i principi della Programmazione Orientata agli Oggetti in un contesto realistico di gestione ristorativa.
 Autore: Gabriele De Carlo
+
+---
 
 🎯 Obiettivi del Progetto
 
@@ -13,6 +16,7 @@ Leggere e scrivere dati su file CSV e TXT
 Analizzare i dati del menu tramite filter() e statistiche base
 Visualizzare i dati tramite grafici con matplotlib (appendice)
 
+---
 
 🛠️ Tech Stack
 
@@ -25,6 +29,7 @@ Modulo csv per la lettura e scrittura del catalogo
 File .txt per ordini e recensioni
 matplotlib per la visualizzazione grafica
 
+---
 
 📂 Project Structure
 
@@ -35,6 +40,7 @@ analisi.py — Analisi statistiche e filtri sui dati del menu
 visualizza.py — Grafici con matplotlib (appendice)
 main.py — Entry point e menu principale
 
+---
 
 ⚙️ Setup
 
@@ -42,6 +48,7 @@ Installare matplotlib: pip install matplotlib
 Eseguire con python3 main.py
 Nessun file necessario: menu.csv, ordini.txt e recensioni.txt vengono creati automaticamente al primo utilizzo
 
+---
 
 🧱 Core Classes
 
@@ -51,6 +58,7 @@ Primo — sottoclasse con attributo specifico tipo_pasta
 Secondo — sottoclasse con attributo specifico cottura
 Gestionale — classe centrale con aggiungi(), cerca(), modifica(), elimina(), visualizza_tutti(), crea_piatto()
 
+---
 
 📊 Functional Workflow
 
@@ -62,6 +70,7 @@ Registrazione ordini e recensioni su file TXT
 Analisi del menu (statistiche, filtro per tipo, filtro per prezzo)
 Visualizzazione grafica tramite sottomenu dedicato (appendice)
 
+---
 
 📈 Key Learning Outcomes
 
@@ -73,10 +82,12 @@ Filter — filter() con lambda per filtrare piatti per tipo e fascia di prezzo
 I/O — lettura e scrittura con with open, modalità r, w, a, encoding UTF-8
 Modularità — ogni file ha una responsabilità specifica
 
+---
 
 📊 Esempi di Output
 
 
+---
 
 📄 License
-This project is intended for educational purposes and practical OOP training.
+This project is intended for educational purposes and practical OOP training. 
