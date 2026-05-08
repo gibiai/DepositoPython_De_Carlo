@@ -82,7 +82,7 @@ def salva_csv(gestionale):
                 "prezzo":    piatto.prezzo,
                 # get_tipo() è polimorfico: ogni classe risponde col suo tipo
                 "tipo":      piatto.get_tipo(),
-                "extra":     extra
+                "extra":     extra,
                 "disponibile": piatto.disponibile  # salva lo stato booleano nel CSV
             })
 
