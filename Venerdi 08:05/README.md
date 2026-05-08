@@ -15,6 +15,7 @@ Progetto sviluppato per applicare i principi della Programmazione Orientata agli
 - Gestire un catalogo di piatti tramite operazioni CRUD (crea, modifica, elimina)
 - Leggere e scrivere dati su file **CSV** e **TXT**
 - Analizzare i dati del menu tramite `filter()` e statistiche base
+- Gestire la disponibilità dei piatti tramite campo booleano
 - Visualizzare i dati tramite grafici con `matplotlib` *(appendice)*
 
 ---
@@ -25,6 +26,7 @@ Progetto sviluppato per applicare i principi della Programmazione Orientata agli
 - OOP (Encapsulation, Inheritance, Polymorphism, Abstraction)
 - `ABC` e `@abstractmethod` per le classi astratte
 - `@property` e setter con validazione per l'incapsulamento
+- __str__ come metodo speciale per la rappresentazione testuale
 - `filter()` per l'analisi dei dati
 - Modulo `csv` per la lettura e scrittura del catalogo
 - File `.txt` per ordini e recensioni
@@ -38,7 +40,7 @@ Progetto sviluppato per applicare i principi della Programmazione Orientata agli
 - `gestionale.py` — Classe `Gestionale`: unico oggetto polimorfico centrale
 - `file_manager.py` — Lettura e scrittura di `menu.csv`, `ordini.txt`, `recensioni.txt`
 - `analisi.py` — Analisi statistiche e filtri sui dati del menu
-- `visualizza.py` — Grafici con `matplotlib` *(appendice)*
+- `visualizza.py` — Grafici con `matplotlib`
 - `main.py` — Entry point e menu principale
 
 ---
@@ -53,11 +55,11 @@ Progetto sviluppato per applicare i principi della Programmazione Orientata agli
 
 ## 🧱 Core Classes
 
-- `Piatto` — classe astratta con `@abstractmethod` su `descrivi()` e `get_tipo()`, `__prezzo` privato con `@property` e setter con validazione
+- `Piatto` — classe astratta con `@abstractmethod` su `descrivi()` e `get_tipo()`, `__prezzo` privato con `@property` e setter con validazione, `disponibile` booleano, `__str__` per rappresentazione testuale
 - `Antipasto` — sottoclasse con attributo specifico `porzione`
 - `Primo` — sottoclasse con attributo specifico `tipo_pasta`
 - `Secondo` — sottoclasse con attributo specifico `cottura`
-- `Gestionale` — classe centrale con `aggiungi()`, `cerca()`, `modifica()`, `elimina()`, `visualizza_tutti()`, `crea_piatto()`
+- `Gestionale` — classe centrale con `aggiungi()`, `cerca()`, `modifica()`, `elimina()`, `visualizza_tutti()`, `crea_piatto()`,`toggle_disponibile()`
 
 ---
 
@@ -66,10 +68,11 @@ Progetto sviluppato per applicare i principi della Programmazione Orientata agli
 1. Avvio del programma e caricamento automatico da `menu.csv` (se esiste)
 2. Inserimento manuale di piatti tramite menu CRUD
 3. Modifica o eliminazione di piatti esistenti tramite codice
-4. Salvataggio del catalogo su `menu.csv`
-5. Registrazione ordini e recensioni su file TXT
-6. Analisi del menu (statistiche, filtro per tipo, filtro per prezzo)
-7. Visualizzazione grafica tramite sottomenu dedicato *(appendice)*
+4. Toggle disponibilità — segna un piatto come esaurito o disponibile
+5. Salvataggio del catalogo su `menu.csv`
+6. Registrazione ordini e recensioni su file TXT
+7. Analisi del menu (statistiche, filtro per tipo, filtro per prezzo)
+8. Visualizzazione grafica tramite sottomenu dedicato
 
 ---
 
@@ -79,9 +82,10 @@ Progetto sviluppato per applicare i principi della Programmazione Orientata agli
 2. **Ereditarietà** — le sottoclassi ereditano da `Piatto` tramite `super()`
 3. **Polimorfismo** — `.descrivi()` e `.get_tipo()` overridati in ogni sottoclasse
 4. **Astrazione** — `Piatto` è classe astratta (`ABC`) non istanziabile direttamente
-5. **Filter** — `filter()` con lambda per filtrare piatti per tipo e fascia di prezzo
-6. **I/O** — lettura e scrittura con `with open`, modalità `r`, `w`, `a`, encoding UTF-8
-7. **Modularità** — ogni file ha una responsabilità specifica
+5. Metodi speciali — `__str__` usato attivamente con `print(piatto)` per la visualizzazione compatta
+6. **Filter** — `filter()` con lambda per filtrare piatti per tipo e fascia di prezzo
+7. **I/O** — lettura e scrittura con `with open`, modalità `r`, `w`, `a`, encoding UTF-8
+8. **Modularità** — ogni file ha una responsabilità specifica
 
 ---
 
