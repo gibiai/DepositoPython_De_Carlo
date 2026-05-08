@@ -3,7 +3,6 @@
 # "setacciando" solo i piatti che servono per la riuscita delle analisi
 from file_manager import leggi_ordini, leggi_recensioni
 
-
 # analizza tutti i piatti presenti nel gestionale e mostra il totale
 def analizza_tutti(gestionale):
     if not gestionale.piatti: # controlla che ci siano piatti da analizzare
@@ -58,7 +57,6 @@ def analizza_per_tipo(gestionale):
         piatto.descrivi()
     print(f"\nTotale: {len(risultati)} piatti") # feedback finale che mostra numero piatti
 
-
 # filtra i piatti per fascia di prezzo usando filter()
 def analizza_per_prezzo(gestionale):
     print("\n--- ANALISI PER FASCIA DI PREZZO ---")
@@ -81,7 +79,6 @@ def analizza_per_prezzo(gestionale):
         piatto.descrivi()
     print(f"\nTotale: {len(risultati)} piatti")
 
-
 # filtra i piatti per disponibilità usando filter() su campo booleano
 # usa print(piatto) che chiama __str__ — metodo speciale per la rappresentazione testuale
 def analizza_disponibili(gestionale):
@@ -103,7 +100,6 @@ def analizza_disponibili(gestionale):
         for p in esauriti:
             print(f"  {p}")  # print(p) chiama __str__ automaticamente — versione compatta
 
-
 # mostra un riepilogo degli ordini e delle recensioni dai file TXT
 def analizza_file(gestionale):
     print("\n--- ANALISI FILE ---")
@@ -117,3 +113,4 @@ def analizza_file(gestionale):
         leggi_recensioni()
     else:
         print("Scelta non valida.")
+        
