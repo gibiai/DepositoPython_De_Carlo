@@ -41,6 +41,9 @@ def carica_csv(gestionale):
                 continue
             # aggiunge direttamente alla lista del gestionale senza stampare messaggi
             gestionale.piatti.append(piatto)
+            # ripristina lo stato di disponibilità salvato nel CSV
+            # la stringa "True" viene riconvertita in booleano
+            piatto.disponibile = riga["disponibile"] == "True"
 
     print(f"(i) Menu caricato: {len(gestionale.piatti)} piatti trovati.")
 
@@ -54,7 +57,7 @@ def salva_csv(gestionale):
         return
 
     # colonne del CSV — extra contiene l'attributo specifico di ogni sottoclasse
-    colonne = ["codice", "nome", "categoria", "prezzo", "tipo", "extra"]
+    colonne = ["codice", "nome", "categoria", "prezzo", "tipo", "extra", "disponibile"]
 
     with open(PATH_CSV, mode="w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=colonne) # creo "assistente" che trasforma i dizionari in righe del CSV
@@ -80,6 +83,7 @@ def salva_csv(gestionale):
                 # get_tipo() è polimorfico: ogni classe risponde col suo tipo
                 "tipo":      piatto.get_tipo(),
                 "extra":     extra
+                "disponibile": piatto.disponibile  # salva lo stato booleano nel CSV
             })
 
     print(f"Menu salvato! ({len(gestionale.piatti)} piatti)")
