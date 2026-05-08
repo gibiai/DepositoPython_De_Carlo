@@ -39,7 +39,7 @@ def grafico_prezzi_per_tipo(gestionale):
         medie.append(round(media, 2)) # Arrotonda a due decimali per una corretta visualizzazione monetaria
 
     # Configura l'area del grafico con dimensioni fisse (7x5 pollici)
-    plt.figure(figsize=(7, 5))
+    plt.figure(figsize=(6, 6))
     # Disegna le barre: associa ogni tipo all'altezza della sua media calcolata
     # Specifica una palette di colori per distinguere visivamente le portate
     plt.bar(tipi, medie, color=["steelblue", "coral", "mediumseagreen"])
