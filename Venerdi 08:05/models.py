@@ -45,7 +45,6 @@ class Piatto(ABC):
         stato = "✅" if self.disponibile else "❌"
         return f"[{self.codice}] {self.get_tipo().upper()} - {self.nome} | €{self.prezzo:.2f} | {stato}"
 
-
 class Antipasto(Piatto):
     def __init__(self, codice, nome, categoria, prezzo, porzione):
         super().__init__(codice, nome, categoria, prezzo)
@@ -60,7 +59,6 @@ class Antipasto(Piatto):
     # implementazione obbligatoria del metodo astratto get_tipo()
     def get_tipo(self):
         return "Antipasto"
-
 
 # sottoclasse Primo: eredita da Piatto e aggiunge l'attributo specifico tipo_pasta
 class Primo(Piatto):
@@ -77,7 +75,6 @@ class Primo(Piatto):
 
     def get_tipo(self):
         return "Primo"
-
 
 # sottoclasse Secondo: eredita da Piatto e aggiunge l'attributo specifico cottura
 class Secondo(Piatto):
