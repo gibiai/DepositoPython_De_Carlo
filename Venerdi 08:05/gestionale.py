@@ -3,7 +3,6 @@
 # e coordina tutte le operazioni CRUD in modo polimorfico
 from models import Antipasto, Primo, Secondo
 
-
 # classe Gestionale: unico oggetto polimorfico che gestisce tutti i piatti
 # il main crea una sola istanza di questa classe e la passa a tutti i moduli
 class Gestionale:
@@ -123,3 +122,4 @@ class Gestionale:
 
         # invoca il metodo interno della classe per aggiornare la lista dei dati aggiungendo l'oggetto piatto
         self.aggiungi(piatto)
+        
