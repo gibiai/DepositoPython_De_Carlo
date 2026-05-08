@@ -15,7 +15,6 @@ PATH_CSV        = os.path.join(CARTELLA, "menu.csv")
 PATH_ORDINI     = os.path.join(CARTELLA, "ordini.txt")
 PATH_RECENSIONI = os.path.join(CARTELLA, "recensioni.txt")
 
-
 # Deserializzazione
 # legge menu.csv e ricostruisce gli oggetti Piatto nella lista del gestionale
 def carica_csv(gestionale):
@@ -88,7 +87,6 @@ def salva_csv(gestionale):
 
     print(f"Menu salvato! ({len(gestionale.piatti)} piatti)")
 
-
 # TXT
 # legge ordini.txt e stampa a schermo tutto lo storico
 def leggi_ordini():
@@ -105,7 +103,6 @@ def leggi_ordini():
         else:
             print(contenuto)
 
-
 # aggiunge un nuovo ordine in fondo al file ordini.txt
 def aggiungi_ordine():
     tavolo = input("Numero tavolo: ").strip()
@@ -114,7 +111,6 @@ def aggiungi_ordine():
     with open(PATH_ORDINI, mode="a", encoding="utf-8") as f:
         f.write(f"Tavolo {tavolo} → {piatto}\n")
     print("Ordine registrato ✅")
-
 
 # svuota completamente il file ordini.txt dopo conferma utente
 def reset_ordini():
@@ -127,9 +123,7 @@ def reset_ordini():
     else:
         print("Operazione annullata.")
 
-
-# ─── TXT RECENSIONI ──────────────────────────────────────────────────────────
-
+# TXT RECENSIONI
 # legge recensioni.txt e stampa a schermo tutte le recensioni
 def leggi_recensioni():
     if not os.path.exists(PATH_RECENSIONI):
@@ -144,7 +138,6 @@ def leggi_recensioni():
         else:
             print(contenuto)
 
-
 # aggiunge una nuova recensione in fondo al file recensioni.txt
 def aggiungi_recensione():
     cliente = input("Nome cliente: ").strip()
@@ -153,3 +146,4 @@ def aggiungi_recensione():
     with open(PATH_RECENSIONI, mode="a", encoding="utf-8") as f:
         f.write(f"[{cliente}] Voto: {voto}/5 — {testo}\n")
     print("Recensione aggiunta!")
+    
