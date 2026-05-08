@@ -86,6 +86,8 @@ Modularità — ogni file ha una responsabilità specifica
 
 📊 Esempi di Output
 
+![Prezzi per tipo](grafico_prezzi_per_tipo.png)
+![Distribuzione tipi](grafico_distribuzione_tipi.png)
 
 ---
 
