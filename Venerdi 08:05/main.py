@@ -2,7 +2,7 @@
 # crea il gestionale, carica i dati dal CSV e avvia il menu principale
 from gestionale import Gestionale
 from file_manager import carica_csv, salva_csv, aggiungi_ordine, aggiungi_recensione, leggi_ordini, leggi_recensioni
-from analisi import analizza_tutti, analizza_per_tipo, analizza_per_prezzo, analizza_file
+from analisi import analizza_tutti, analizza_per_tipo, analizza_per_prezzo, analizza_file, analizza_disponibili
 from visualizza import grafico_prezzi_per_tipo, grafico_distribuzione_tipi
 
 # unica istanza del gestionale: tutte le funzioni lavorano su questo oggetto
@@ -53,6 +53,7 @@ def menu_analisi():
     print("2. Analisi per tipo di piatto")
     print("3. Analisi per fascia di prezzo")
     print("4. Analisi file (ordini/recensioni)")
+    print("5. Analisi disponibilità")
     print("0. Torna indietro")
     scelta = input("\nScelta: ").strip()
 
@@ -64,6 +65,8 @@ def menu_analisi():
         analizza_per_prezzo(gestionale)         # usa filter() per range di prezzo
     elif scelta == "4":
         analizza_file(gestionale)               # visualizza storici esterni
+    elif scelta == "5":
+        analizza_disponibili(gestionale)        # usa filter() su booleano disponibile
     elif scelta == "0":
         return
     else:
@@ -90,7 +93,7 @@ def menu_visualizzazione():
 
 # funzione principale: coordina il flusso dell'applicazione
 def menu():
-    # Deserializzazione iniziale: ripristina lo stato del menu dal file CSV
+    # deserializzazione iniziale: ripristina lo stato del menu dal file CSV
     carica_csv(gestionale)
 
     while True: # ciclo infinito per mantenere il programma attivo fino all'uscita
@@ -99,18 +102,19 @@ def menu():
         print("2. Aggiungi piatto")
         print("3. Modifica piatto")
         print("4. Elimina piatto")
-        print("5. Salva menu su CSV")
-        print("6. Ordini")
-        print("7. Recensioni")
-        print("8. Analisi")
-        print("9. Grafici")
+        print("5. Segna disponibile/esaurito")
+        print("6. Salva menu su CSV")
+        print("7. Ordini")
+        print("8. Recensioni")
+        print("9. Analisi")
+        print("10. Grafici")
         print("0. Esci")
         scelta = input("\nScelta: ").strip()
 
         # match-case per una gestione pulita delle opzioni (Python 3.10+)
         match scelta:
             case "1":
-                gestionale.visualizza_tutti()       # sfrutta il polimorfismo di .descrivi()
+                gestionale.visualizza_tutti()       # usa __str__ — metodo speciale
             case "2":
                 gestionale.crea_piatto()            # avvia la creazione guidata
             case "3":
@@ -120,17 +124,20 @@ def menu():
                 codice = input("Codice piatto da eliminare: ").strip()
                 gestionale.elimina(codice)          # rimuove l'oggetto dalla lista
             case "5":
-                salva_csv(gestionale)               # Serializzazione forzata su richiesta
+                codice = input("Codice piatto: ").strip()
+                gestionale.toggle_disponibile(codice)  # inverte il booleano disponibile
             case "6":
-                menu_ordini()                       # navigazione sottomenu
+                salva_csv(gestionale)               # serializzazione forzata su richiesta
             case "7":
-                menu_recensioni()                   
+                menu_ordini()                       # navigazione sottomenu
             case "8":
-                menu_analisi()                      
+                menu_recensioni()
             case "9":
-                menu_visualizzazione()              
+                menu_analisi()
+            case "10":
+                menu_visualizzazione()
             case "0":
-                # Persistenza dei dati garantita: salva tutto prima della chiusura
+                # persistenza dei dati garantita: salva tutto prima della chiusura
                 salva_csv(gestionale)
                 print("Arrivederci!")
                 break # interrompe il ciclo while
@@ -138,6 +145,6 @@ def menu():
                 print("Scelta non valida.")
 
 
-# Avvio del programma: impedisce l'esecuzione automatica in caso di importazione
+# avvio del programma: impedisce l'esecuzione automatica in caso di importazione
 if __name__ == "__main__":
     menu()

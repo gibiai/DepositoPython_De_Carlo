@@ -9,7 +9,7 @@ from models import Antipasto, Primo, Secondo
 class Gestionale:
 
     def __init__(self): # inizializza la lista vuota che conterrà tutti i piatti
-        # lista unica per tutti i tipi di piatto 
+        # lista unica per tutti i tipi di piatto
         self.piatti = []
 
     def aggiungi(self, piatto): # metodo che aggiunge un piatto alla lista
@@ -24,7 +24,8 @@ class Gestionale:
                 return piatto
         return None
 
-    # metodo polimorfico: stampa tutti i piatti chiamando .descrivi() su ognuno
+    # metodo polimorfico: stampa tutti i piatti usando __str__ invece di .descrivi()
+    # print(piatto) chiama automaticamente __str__ — metodo speciale definito in Piatto
     # Python decide da solo quale versione chiamare in base al tipo reale dell'oggetto
     def visualizza_tutti(self):
         if not self.piatti:
@@ -32,7 +33,7 @@ class Gestionale:
             return
         print("\n--- MENU RISTORANTE ---")
         for piatto in self.piatti:
-            piatto.descrivi()  # polimorfico: Antipasto, Primo o Secondo
+            print(piatto)  # chiama __str__ automaticamente: versione compatta con stato disponibilità
 
     # metodo che modifica gli attributi di un piatto trovato tramite codice
     def modifica(self, codice):
@@ -77,6 +78,18 @@ class Gestionale:
         else:
             print("Eliminazione annullata.")
 
+    # metodo che inverte il campo disponibile del piatto trovato tramite codice
+    # True diventa False (esaurito) e False diventa True (disponibile)
+    def toggle_disponibile(self, codice):
+        piatto = self.cerca(codice)
+        if not piatto:
+            print("Codice non trovato!")
+            return
+        # not inverte il booleano: se era True diventa False e viceversa
+        piatto.disponibile = not piatto.disponibile
+        stato = "disponibile ✅" if piatto.disponibile else "esaurito ❌"
+        print(f"'{piatto.nome}' ora è {stato}")
+
     # metodo che chiede i dati all'utente e crea il tipo di piatto scelto
     # serie di strip per datacleaning (evitiamo spazi o errori invisibili)
     def crea_piatto(self):
@@ -108,5 +121,5 @@ class Gestionale:
                 print("Scelta non valida.")
                 return
 
-       # Invoca il metodo interno della classe per aggiornare la lista dei dati aggiungendo l'oggetto piatto.
+        # invoca il metodo interno della classe per aggiornare la lista dei dati aggiungendo l'oggetto piatto
         self.aggiungi(piatto)

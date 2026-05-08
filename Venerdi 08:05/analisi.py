@@ -14,7 +14,7 @@ def analizza_tutti(gestionale):
     totale_piatti = len(gestionale.piatti) # riporta numero totale dei piatti
 
     # calcola il prezzo medio sommando tutti i prezzi e dividendo per il totale
-    # generetor expression - ciclo for contratto nelle parentesi
+    # generator expression - ciclo for contratto nelle parentesi
     # estrae .prezzo da ogni oggetto piatto e lo passa alla funzione sum
     somma_prezzi  = sum(p.prezzo for p in gestionale.piatti) # calcoliamo i valori in posizione
     prezzo_medio  = somma_prezzi / totale_piatti # divisione semplice per avere la media
@@ -28,7 +28,7 @@ def analizza_tutti(gestionale):
         if piatto.prezzo < piu_economico.prezzo:
             piu_economico = piatto # aggiorniamo se troviamo più economico
 
-    # serie di f-string per stampare tutto anche dove necessita di numero decimale con 2 dopo 
+    # serie di f-string per stampare tutto anche dove necessita di numero decimale con 2 dopo
     print(f"Totale piatti in menu:  {totale_piatti}")
     print(f"Prezzo medio:           €{prezzo_medio:.2f}")
     print(f"Piatto più caro:        {piu_caro.nome} (€{piu_caro.prezzo:.2f})")
@@ -53,17 +53,17 @@ def analizza_per_tipo(gestionale):
         return
 
     # visualizzazione dei risultati finali
-    print(f"\n--- PIATTI: {tipo_richiesto.upper()} ---") # qui scriviamo in maiuscolo
+    print(f"\n--- PIATTI: {tipo_richiesto.upper()} ---") # scriviamo in maiuscolo
     for piatto in risultati: # mostra ogni piatto trovato descrivendolo
         piatto.descrivi()
-    print(f"\nTotale: {len(risultati)} piatti") # feedback finale che mostra numero piatti 
+    print(f"\nTotale: {len(risultati)} piatti") # feedback finale che mostra numero piatti
 
 
 # filtra i piatti per fascia di prezzo usando filter()
 def analizza_per_prezzo(gestionale):
     print("\n--- ANALISI PER FASCIA DI PREZZO ---")
     # chiede i limiti della fascia di prezzo
-    minimo = float(input("Prezzo minimo (€): "))
+    minimo  = float(input("Prezzo minimo (€): "))
     massimo = float(input("Prezzo massimo (€): "))
 
     # filter() tiene solo i piatti il cui prezzo è dentro la fascia richiesta
@@ -80,6 +80,28 @@ def analizza_per_prezzo(gestionale):
     for piatto in risultati:
         piatto.descrivi()
     print(f"\nTotale: {len(risultati)} piatti")
+
+
+# filtra i piatti per disponibilità usando filter() su campo booleano
+# usa print(piatto) che chiama __str__ — metodo speciale per la rappresentazione testuale
+def analizza_disponibili(gestionale):
+    if not gestionale.piatti: # controlla che ci siano piatti prima di filtrare
+        print("Nessun piatto nel menu!")
+        return
+
+    # filter() con lambda booleana: tiene solo i piatti con disponibile == True
+    disponibili = list(filter(lambda p: p.disponibile, gestionale.piatti))
+    # not p.disponibile inverte il booleano: tiene solo i piatti esauriti
+    esauriti    = list(filter(lambda p: not p.disponibile, gestionale.piatti))
+
+    print(f"\n--- DISPONIBILITÀ MENU ---")
+    print(f"Disponibili: {len(disponibili)}")
+    print(f"Esauriti:    {len(esauriti)}")
+
+    if esauriti:
+        print("\nPiatti esauriti:")
+        for p in esauriti:
+            print(f"  {p}")  # print(p) chiama __str__ automaticamente — versione compatta
 
 
 # mostra un riepilogo degli ordini e delle recensioni dai file TXT
