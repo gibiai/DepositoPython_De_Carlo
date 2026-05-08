@@ -54,6 +54,7 @@ def grafico_prezzi_per_tipo(gestionale):
     plt.xlabel("Tipo")
     plt.ylabel("Prezzo medio (€)")
     plt.tight_layout() # sistema i margini per evitare che le scritte vengano tagliate
+    plt.savefig("grafico_prezzi_per_tipo.png")  # salva nella cartella del progetto
     plt.show() # blocca l'esecuzione finché l'utente non chiude la finestra del grafico
     print("Grafico prezzi per tipo generato!")
 
@@ -90,5 +91,6 @@ def grafico_distribuzione_tipi(gestionale):
 
     plt.title("Distribuzione piatti per tipo")
     plt.tight_layout() # previene sovrapposizioni tra etichette e titoli
+    plt.savefig("grafico_prezzi_per_tipo.png")  # salva nella cartella del progetto
     plt.show() # visualizza il grafico a schermo
     print("Grafico distribuzione tipi generato!")
