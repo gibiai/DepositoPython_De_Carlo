@@ -2,7 +2,6 @@
 # genera due grafici: prezzo medio per tipo e distribuzione piatti per tipo
 import matplotlib.pyplot as plt
 
-
 # grafico a barre: mostra il prezzo medio per ogni tipo di piatto
 def grafico_prezzi_per_tipo(gestionale):
 
@@ -58,7 +57,6 @@ def grafico_prezzi_per_tipo(gestionale):
     plt.show() # blocca l'esecuzione finché l'utente non chiude la finestra del grafico
     print("Grafico prezzi per tipo generato!")
 
-
 # grafico a torta: mostra la distribuzione percentuale dei piatti per tipo
 def grafico_distribuzione_tipi(gestionale):
 
@@ -93,4 +91,5 @@ def grafico_distribuzione_tipi(gestionale):
     plt.tight_layout() # previene sovrapposizioni tra etichette e titoli
     plt.savefig("grafico_prezzi_per_tipo.png")  # salva nella cartella del progetto
     plt.show() # visualizza il grafico a schermo
+    
     print("Grafico distribuzione tipi generato!")
