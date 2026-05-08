@@ -9,7 +9,6 @@ from visualizza import grafico_prezzi_per_tipo, grafico_distribuzione_tipi
 # centralizza i dati per evitare duplicati in memoria
 gestionale = Gestionale()
 
-
 # sottomenu dedicato alla gestione degli ordini su file TXT
 def menu_ordini():
     print("\n--- ORDINI ---")
@@ -27,7 +26,6 @@ def menu_ordini():
     else:
         print("Scelta non valida.")
 
-
 # sottomenu dedicato alle recensioni su file TXT
 def menu_recensioni():
     print("\n--- RECENSIONI ---")
@@ -44,7 +42,6 @@ def menu_recensioni():
         return
     else:
         print("Scelta non valida.")
-
 
 # sottomenu dedicato alle analisi statistiche e ai filtri
 def menu_analisi():
@@ -72,7 +69,6 @@ def menu_analisi():
     else:
         print("Scelta non valida.")
 
-
 # sottomenu dedicato alla generazione di grafici con Matplotlib
 def menu_visualizzazione():
     print("\n--- VISUALIZZAZIONE ---")
@@ -89,7 +85,6 @@ def menu_visualizzazione():
         return
     else:
         print("Scelta non valida.")
-
 
 # funzione principale: coordina il flusso dell'applicazione
 def menu():
