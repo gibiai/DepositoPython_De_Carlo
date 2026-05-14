@@ -1,0 +1,136 @@
+import pandas as pd
+import random
+
+# PUNTO 1: Creazione DataFrame
+# liste di valori realistici da cui peschiamo casualmente
+prodotti = ["Laptop", "Smartphone", "Tablet", "Monitor", "Tastiera", "Mouse", "Cuffie"]
+citta    = ["Roma", "Milano", "Napoli", "Torino", "Firenze", "Bologna"]
+
+# costruiamo le liste una per una con cicli for classici
+prodotti_lista = []
+quantita_lista = []
+prezzo_lista   = []
+citta_lista    = []
+
+for _ in range(20):
+    prodotti_lista.append(random.choice(prodotti))
+    quantita_lista.append(random.randint(1, 50))
+    prezzo_lista.append(round(random.uniform(10, 1500), 2))
+    citta_lista.append(random.choice(citta))
+
+# passiamo le liste al dizionario
+data = {
+    "Prodotto":        prodotti_lista,
+    "Quantità":        quantita_lista,
+    "Prezzo Unitario": prezzo_lista,
+    "Città":           citta_lista
+}
+
+# pd.DataFrame trasforma il dizionario in una tabella strutturata
+df = pd.DataFrame(data)
+
+print("=" * 50)
+print("ESERCIZIO 2 — Manipolazione e Aggregazione Dati")
+print("=" * 50)
+
+print("\n--- DataFrame originale ---")
+print(df)
+
+# PUNTO 2: Colonna Totale Vendite
+# pandas moltiplica le colonne riga per riga automaticamente — operazione vettoriale
+# equivale a fare quantita * prezzo per ogni singola riga senza scrivere un ciclo for
+# risultato verrà salvato nuova colonna
+df["Totale Vendite"] = df["Quantità"] * df["Prezzo Unitario"]
+df["Totale Vendite"] = df["Quantità"] * df["Prezzo Unitario"]
+
+print("\n--- DataFrame con colonna Totale Vendite ---")
+print(df[["Prodotto", "Quantità", "Prezzo Unitario", "Totale Vendite"]])
+
+# PUNTO 3: Totale vendite per prodotto
+'''
+# calcoliamo manualmente con un dizionario e un ciclo for, alternativa era groupby
+# per ogni riga sommiamo il Totale Vendite nel dizionario alla chiave del prodotto
+totale_per_prodotto = {} # creo dizionario per i totali
+for i in range(len(df)): # ciclo fino al totale righe dataframe
+    prodotto = df["Prodotto"][i] # per ogni riga prendo prodotto e totale vendite
+    totale   = df["Totale Vendite"][i]
+    if prodotto in totale_per_prodotto: # se il prodotto esiste già lo aggiunge, altrimenti lo crea
+        totale_per_prodotto[prodotto] += totale
+    else:
+        totale_per_prodotto[prodotto] = totale
+
+print("\n--- Totale vendite per prodotto ---")
+for prodotto, totale in totale_per_prodotto.items(): # cicla il dizionario e stampa ogni prodotto
+    print(f"{prodotto}: €{totale:.2f}")
+'''
+# raggruppa le righe con lo stesso prodotto e somma il Totale Vendite per ogni gruppo
+# groupby() è come fare un for sul dizionario ma in una riga sola
+totale_per_prodotto = df.groupby("Prodotto")["Totale Vendite"].sum().round(2)
+
+print("\n--- Totale vendite per prodotto ---")
+print(totale_per_prodotto)
+
+# PUNTO 4: Prodotto più venduto per quantità
+'''
+# calcoliamo la quantità totale per ogni prodotto con un dizionario
+quantita_per_prodotto = {}
+for i in range(len(df)):
+    prodotto = df["Prodotto"][i]
+    quantita = df["Quantità"][i]
+    if prodotto in quantita_per_prodotto:
+        quantita_per_prodotto[prodotto] += quantita
+    else:
+        quantita_per_prodotto[prodotto] = quantita
+
+# cerchiamo il prodotto con la quantità più alta — stesso pattern di analizza_tutti
+prodotto_max = list(quantita_per_prodotto.keys())[0]
+for prodotto, quantita in quantita_per_prodotto.items():
+    if quantita > quantita_per_prodotto[prodotto_max]:
+        prodotto_max = prodotto
+
+print(f"\n--- Prodotto più venduto ---")
+print(f"{prodotto_max} ({quantita_per_prodotto[prodotto_max]} unità)")
+'''
+# raggruppa per prodotto e somma le quantità per ognuno
+# idxmax() restituisce il nome del prodotto con il valore più alto
+# max() restituisce il valore numerico più alto
+prodotto_piu_venduto = df.groupby("Prodotto")["Quantità"].sum().idxmax()
+quantita_massima     = df.groupby("Prodotto")["Quantità"].sum().max()
+
+print(f"\n--- Prodotto più venduto ---")
+print(f"{prodotto_piu_venduto} ({quantita_massima} unità)")
+
+# PUNTO 5: Città con maggior volume di vendite
+# raggruppa per città e somma il Totale Vendite per ognuna
+# idxmax() restituisce il nome della città con il valore più alto
+# max() restituisce il valore più alto
+citta_max        = df.groupby("Città")["Totale Vendite"].sum().idxmax()
+vendite_massime  = df.groupby("Città")["Totale Vendite"].sum().max()
+
+print(f"\n--- Città con maggior volume di vendite ---")
+print(f"{citta_max} (€{vendite_massime:.2f})")
+
+# PUNTO 6: Vendite superiori a 1000 euro
+# boolean indexing: restituisce solo le righe dove Totale Vendite supera 1000
+# stessa cosa visto con df[df['Età'] > 23]
+# creo nuovo dataframe con solo le righe dove Totale > 1000
+df_top = df[df["Totale Vendite"] > 1000]
+
+print(f"\n--- Vendite superiori a €1000 ({len(df_top)} righe) ---")
+print(df_top[["Prodotto", "Città", "Totale Vendite"]])
+
+# PUNTO 7: Ordinamento per Totale Vendite decrescente 
+# sort_values() ordina il DataFrame per la colonna indicata
+# ascending=False significa dal valore più alto al più basso
+# creo un nuovo df ordinato
+df_ordinato = df.sort_values("Totale Vendite", ascending=False)
+
+print("\n--- DataFrame ordinato per Totale Vendite (decrescente) ---")
+print(df_ordinato[["Prodotto", "Città", "Totale Vendite"]])
+
+# PUNTO 8: Numero di vendite per città 
+# calcoliamo quante volte appare ogni città — ogni riga è una vendita
+# value_counts() conta quante volte appare ogni valore nella colonna
+# ogni riga è una transazione quindi il conteggio = numero di vendite
+print("\n--- Numero di vendite per città ---")
+print(df["Città"].value_counts())

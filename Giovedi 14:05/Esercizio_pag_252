@@ -1,0 +1,125 @@
+import pandas as pd
+import numpy as np
+import random
+
+# PUNTO 1: Creazione DataFrame con dati casuali 
+# liste di valori realistici da cui peschiamo casualmente
+nomi  = ["Mario", "Lucia", "Marco", "Anna", "Giulio", "Sara", "Luca", "Elena", "Paolo", "Chiara"]
+citta = ["Roma", "Milano", "Napoli", "Torino", "Firenze", "Bologna", "Venezia", "Palermo"]
+
+# costruiamo le liste una per una
+nomi_lista    = []
+eta_lista     = []
+citta_lista   = []
+salario_lista = []
+
+for _ in range(10):
+    nomi_lista.append(random.choice(nomi))              # sceglie un nome casuale dalla lista
+    eta_lista.append(random.randint(15, 75))            # genera un intero casuale tra 15 e 75
+    citta_lista.append(random.choice(citta))            # sceglie una città casuale dalla lista
+    salario_lista.append(round(random.uniform(1200, 5000), 2))  # genera un decimale casuale tra 1200 e 5000
+
+# passiamo le liste al dizionario 
+data = {
+    "Nome":    nomi_lista,
+    "Età":     eta_lista,
+    "Città":   citta_lista,
+    "Salario": salario_lista
+}
+
+# pd.DataFrame trasforma il dizionario in una tabella strutturata
+df = pd.DataFrame(data)
+
+print("=" * 45)
+print("ESERCIZIO 1 — Analisi Esplorativa dei Dati")
+print("=" * 45)
+print("\nDataFrame originale:")
+print(df)
+
+# PUNTO 2: Prime e ultime 5 righe 
+# .head() mostra le prime 5 righe del DataFrame
+print("\n--- Prime 5 righe ---")
+print(df.head())
+
+# .tail() mostra le ultime 5 righe del DataFrame
+print("\n--- Ultime 5 righe ---")
+print(df.tail())
+
+# PUNTO 3: Tipo di dati di ciascuna colonna 
+# .dtypes restituisce il tipo di dato di ogni colonna
+# object = stringa, int64 = intero, float64 = decimale
+print("\n--- Tipo di dati per colonna ---")
+print(df.dtypes)
+
+# PUNTO 4: Statistiche descrittive 
+# estraiamo i valori delle colonne numeriche come liste
+eta_valori     = df["Età"].tolist()
+salario_valori = df["Salario"].tolist()
+
+# media: somma di tutti i valori divisa per il numero di valori
+media_eta     = sum(eta_valori) / len(eta_valori)
+media_salario = sum(salario_valori) / len(salario_valori)
+
+# df["Età"].mean()
+
+# mediana: valore centrale dopo aver ordinato la lista
+# .median() è un metodo che la calcola subito
+# mediana valore centrale dopo averli ordinati tutti
+mediana_eta     = df["Età"].median()
+mediana_salario = df["Salario"].median()
+
+# deviazione standard: misura quanto i valori si discostano dalla media
+# .std() è un metodo che la calcola in automatico
+# deviazione std = quanto i valori si discostano dalla media
+std_eta     = df["Età"].std()
+std_salario = df["Salario"].std()
+
+print("\n--- Statistiche descrittive ---")
+print(f"Età     — media: {media_eta:.2f} | mediana: {mediana_eta:.2f} | std: {std_eta:.2f}")
+print(f"Salario — media: {media_salario:.2f} | mediana: {mediana_salario:.2f} | std: {std_salario:.2f}")
+
+# PUNTO 5: Rimozione duplicati
+# aggiungiamo manualmente qualche duplicato per dimostrare il funzionamento
+# df.iloc[[0, 2]] prende le righe in posizione 0 e 2 dal DataFrame
+# pd.concat prende una lista di DataFrame e li unisce uno sotto l'altro
+# ignore_index=True rinumera gli indici da 0 a N evitando numeri ripetuti
+df = pd.concat([df, df.iloc[[0, 2]]], ignore_index=True) 
+print(f"\n--- Righe prima della rimozione duplicati: {len(df)} ---")
+
+# drop_duplicates() rimuove le righe identiche
+df = df.drop_duplicates()
+print(f"--- Righe dopo la rimozione duplicati:  {len(df)} ---")
+
+# PUNTO 6: Gestione valori mancanti 
+# inseriamo manualmente alcuni valori mancanti per sostituirli successivamente
+df.loc[1, "Salario"] = np.nan # loc accede alla casella specifica del df, riga 1 colonna Salario
+df.loc[3, "Età"]     = np.nan # è come lista[1] = None 
+
+print("\n--- Valori mancanti prima del fillna ---")
+# isnull() restituisce True dove c'è un NaN, sum() li conta per colonna
+print(df.isnull().sum())
+
+# sostituiamo i valori mancanti con la mediana della rispettiva colonna
+# stesso metodo visto in classe con fillna e inplace
+df.fillna({"Età": df["Età"].median(), "Salario": df["Salario"].median()}, inplace=True)
+
+print("\n--- Valori mancanti dopo il fillna ---")
+print(df.isnull().sum())
+
+# PUNTO 7: Colonna Categoria Età 
+# creiamo la lista delle categorie ciclando manualmente sui valori di Età
+categorie = [] # lista vuota
+for eta in df["Età"]: # cicliamo sui valori di età
+    if eta <= 18:
+        categorie.append("Giovane")   # 0-18 anni allora aggiunge giovane alla lista
+    elif eta <= 65:
+        categorie.append("Adulto")    # 19-65 anni
+    else:
+        categorie.append("Senior")    # oltre 65 anni
+
+# aggiungiamo la lista come nuova colonna del DataFrame
+# come visto prima: df["nuova_colonna"] = valore
+df["Categoria Età"] = categorie
+
+print("\n--- DataFrame con colonna Categoria Età ---")
+print(df[["Nome", "Età", "Categoria Età"]])
